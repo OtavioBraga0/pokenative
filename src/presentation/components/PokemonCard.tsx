@@ -17,10 +17,25 @@ import {BG_COLORS} from '../layout/constants';
 import bgDetails from '../assets/pokemonCard_bg.png';
 import {TypeCard} from './TypeCard';
 import {FlatList} from 'react-native';
+import {useNavigation} from '@react-navigation/core';
+import {ROUTES} from '../Routes';
+import {useDispatch} from 'react-redux';
+import {selectPokemon} from '../../domain/ducks/pokemonReducer';
 
-const PurePokemonCard: React.FC<Pokemon> = ({name, types, id, sprites}) => {
+const PurePokemonCard: React.FC<Pokemon> = props => {
+  const navigation = useNavigation();
+
+  const {name, types, id, sprites} = props;
+
+  const dispatch = useDispatch();
+
   return (
-    <Card background={BG_COLORS[types[0].type.name]}>
+    <Card
+      background={BG_COLORS[types[0].type.name]}
+      onPress={() => {
+        navigation.navigate(ROUTES.POKEMON);
+        dispatch(selectPokemon(props));
+      }}>
       <Bg source={bgDetails}>
         <Content>
           <Id>#{id.toString().padStart(3, '0')}</Id>

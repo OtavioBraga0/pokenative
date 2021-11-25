@@ -33,6 +33,10 @@ export const isLoading: PayloadActionCreator<PokemonState> = createAction(
   'duck/pokemon/isLoading',
 );
 
+export const selectPokemon: PayloadActionCreator<Pokemon> = createAction(
+  'duck/pokemon/selectPokemon',
+);
+
 function handleGetDetailedPokemons(
   state: PokemonState,
   action: PayloadAction<Pokemon[]>,
@@ -40,6 +44,17 @@ function handleGetDetailedPokemons(
   return {
     ...state,
     pokemons: action.payload,
+    isLoading: false,
+  };
+}
+
+function handleSelectPokemon(
+  state: PokemonState,
+  action: PayloadAction<Pokemon>,
+): PokemonState {
+  return {
+    ...state,
+    detailedPokemon: action.payload,
     isLoading: false,
   };
 }
@@ -63,4 +78,5 @@ export const pokemonReducer: Reducer<PokemonState, PokemonActionsType> =
     [getPokemonsThunk.pending.type]: handlePending,
     [getPokemonsThunk.rejected.type]: handleRejected,
     [getPokemonsThunk.fulfilled.type]: handleGetDetailedPokemons,
+    [selectPokemon.type]: handleSelectPokemon,
   });
