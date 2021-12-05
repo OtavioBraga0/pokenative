@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import {Animated, Easing} from 'react-native';
-import {styles} from '../layout/components/Loading';
+import {styles} from './style';
 
 type LoadingProps = {
   isLoading: boolean;
@@ -35,7 +35,7 @@ export const Loading: React.FC<LoadingProps> = ({isLoading}) => {
 
   return (
     <Animated.Image
-      source={require('../assets/loading.png')}
+      source={require('../../assets/loading.png')}
       style={[
         styles.loading,
         {transform: [{rotateZ: rotateAnimInterpolation}]},

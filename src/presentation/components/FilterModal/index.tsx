@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {ModalBase, ModalBaseProps} from './ModalBase';
+import {ModalBase, ModalBaseProps} from '../ModalBase';
 import {
   Title,
   Description,
@@ -7,14 +7,17 @@ import {
   HorizontalScroll,
   Filter,
   styles,
-} from '../layout/components/FilterModal';
+  ActionGroup,
+} from './style';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   filterSelector,
   handleFilterThunk,
-} from '../../domain/ducks/filterReducer';
-import {TypeBadge, HeightBadge, WeightBadge} from './FilterBadge';
+  handleResetThunk,
+} from '../../../domain/ducks/filterReducer';
+import {TypeBadge, HeightBadge, WeightBadge} from '../FilterBadge';
 import {ScrollView} from 'react-native';
+import {ActionButton} from '../ActionButton';
 
 const TYPES = [
   'bug',
@@ -45,14 +48,11 @@ type FilterProps = {
 };
 
 export const FilterModal: React.FC<ModalBaseProps> = ({...modalProps}) => {
-  const {height, numberRange, types, weaknesses, weight} =
-    useSelector(filterSelector);
+  const {height, types, weight} = useSelector(filterSelector);
 
   const [selectedFilters, setSelectedFilters] = useState<FilterProps>({
     height: [],
-    numberRange: [],
     types: [],
-    weaknesses: [],
     weight: [],
   });
 
@@ -61,32 +61,41 @@ export const FilterModal: React.FC<ModalBaseProps> = ({...modalProps}) => {
   useEffect(() => {
     setSelectedFilters({
       height,
-      numberRange,
       types,
-      weaknesses,
       weight,
     });
-  }, [types, weaknesses, weight, height, numberRange]);
+  }, [types, weight, height]);
 
   const handleSelect = useCallback(
     (selectedFilter: string | number, filter: string) => {
       setSelectedFilters(prev => {
         const checkFilter = prev[filter].indexOf(selectedFilter);
+        let filterResult = {};
 
         if (checkFilter === -1) {
-          return {...prev, [filter]: [...prev[filter], selectedFilter]};
+          filterResult = {...prev, [filter]: [...prev[filter], selectedFilter]};
         } else {
-          return {
+          filterResult = {
             ...prev,
             [filter]: prev[filter].filter(
               prevFilter => prevFilter !== selectedFilter,
             ),
           };
         }
+
+        return filterResult;
       });
     },
     [],
   );
+
+  const handleReset = useCallback(() => {
+    dispatch(handleResetThunk());
+  }, [dispatch]);
+
+  const handleApply = useCallback(() => {
+    dispatch(handleFilterThunk(selectedFilters));
+  }, [selectedFilters, dispatch]);
 
   return (
     <ModalBase {...modalProps}>
@@ -107,21 +116,6 @@ export const FilterModal: React.FC<ModalBaseProps> = ({...modalProps}) => {
                 onPress={() => handleSelect(item, 'types')}
                 name={item}
                 active={selectedFilters.types.indexOf(item) !== -1}
-              />
-            )}
-          />
-        </Filter>
-        <Filter>
-          <TitleFilter>Weakenesses</TitleFilter>
-          <HorizontalScroll
-            horizontal
-            data={TYPES}
-            keyExtractor={(type: string) => type}
-            renderItem={({item}: {item: string}) => (
-              <TypeBadge
-                onPress={() => handleSelect(item, 'weaknesses')}
-                name={item}
-                active={selectedFilters.weaknesses.indexOf(item) !== -1}
               />
             )}
           />
@@ -156,6 +150,15 @@ export const FilterModal: React.FC<ModalBaseProps> = ({...modalProps}) => {
             )}
           />
         </Filter>
+        <ActionGroup>
+          <ActionButton activated={false} onPress={handleReset}>
+            Reset
+          </ActionButton>
+
+          <ActionButton activated onPress={handleApply}>
+            Apply
+          </ActionButton>
+        </ActionGroup>
       </ScrollView>
     </ModalBase>
   );

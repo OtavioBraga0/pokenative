@@ -1,9 +1,9 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
-import {pokemonSelector} from '../../domain/ducks/pokemonReducer';
-import {BG_COLORS} from '../layout/constants';
-import {BackButton, Container} from '../layout/pages/Pokemon';
+import {pokemonSelector} from '../../../domain/ducks/pokemonReducer';
+import {BG_COLORS} from '../../layout/constants';
+import {BackButton, Container} from './style';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/core';

@@ -1,6 +1,6 @@
 // @ts-ignore
 import styled from 'styled-components/native';
-import {BACKGROUND_COLOR, TEXT_COLOR} from '../constants';
+import {BACKGROUND_COLOR, TEXT_COLOR} from '../../layout/constants';
 
 type CardProps = {
   background: string;

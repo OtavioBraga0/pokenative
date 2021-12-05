@@ -1,7 +1,11 @@
 // @ts-ignore
 import styled from 'styled-components/native';
 import {StyleSheet} from 'react-native';
-import {TEXT_COLOR} from '../constants';
+import {TEXT_COLOR} from '../../layout/constants';
+
+type ButtonProps = {
+  activated: boolean;
+};
 
 export const Title = styled.Text`
   font-weight: bold;
@@ -36,6 +40,11 @@ export const HorizontalScroll = styled.FlatList`
 
 export const Filter = styled.View`
   margin-bottom: 35px;
+`;
+
+export const ActionGroup = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 export const styles = StyleSheet.create({

@@ -1,14 +1,14 @@
 import React from 'react';
 import {TouchableOpacityProps} from 'react-native';
 
-import {Badge} from '../layout/components/FilterBadge';
+import {Badge} from './style';
 import {
   BACKGROUND_COLOR,
   HEIGHT_COLOR,
   TYPE_COLORS,
   WEIGHT_COLOR,
-} from '../layout/constants';
-import {TypeIcon, HeightIcon} from './Icons';
+} from '../../layout/constants';
+import {TypeIcon, HeightIcon, WeightIcon} from '../Icons';
 
 export interface BadgeProps extends TouchableOpacityProps {
   active: boolean;
@@ -54,7 +54,7 @@ export const WeightBadge: React.FC<BadgeProps> = ({name, active, ...rest}) => (
     name={name}
     type="weight"
     background={active ? WEIGHT_COLOR[name] : BACKGROUND_COLOR.white}>
-    <HeightIcon
+    <WeightIcon
       color={!active ? WEIGHT_COLOR[name] : BACKGROUND_COLOR.white}
       name={name}
       size={25}

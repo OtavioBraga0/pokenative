@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {ModalBase, ModalBaseProps} from './ModalBase';
+import {ModalBase, ModalBaseProps} from '../ModalBase';
 import {
   Title,
   Description,
@@ -8,14 +8,14 @@ import {
   Grid,
   Background,
   styles,
-} from '../layout/components/GenerationFilterModal';
+} from './style';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   filterSelector,
   handleFilterThunk,
-} from '../../domain/ducks/filterReducer';
-import {RomanNumeralConverter} from '../utils/converter';
-import {GenerationIcon} from './Icons';
+} from '../../../domain/ducks/filterReducer';
+import {RomanNumeralConverter} from '../../utils/converter';
+import {GenerationIcon} from '../Icons';
 
 export const GenerationFilterModal: React.FC<ModalBaseProps> = ({
   ...modalProps
@@ -64,7 +64,7 @@ export const GenerationFilterModal: React.FC<ModalBaseProps> = ({
                 Generation {romanNumeral.toUpperCase()}
               </ButtonActionText>
               <Background
-                source={require('../assets/generation_bg.png')}
+                source={require('../../assets/generation_bg.png')}
                 style={styles.bg}
               />
             </ButtonAction>

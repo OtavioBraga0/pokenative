@@ -1,8 +1,8 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {pokemonSelector} from '../../domain/ducks/pokemonReducer';
-import {getPokemonsThunk} from '../../domain/thunks/pokemonThunk';
-import {PokemonCard} from '../components/PokemonCard';
+import {pokemonSelector} from '../../../domain/ducks/pokemonReducer';
+import {getPokemonsThunk} from '../../../domain/thunks/pokemonThunk';
+import {PokemonCard} from '../../components/PokemonCard';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FontistoIcon from 'react-native-vector-icons/Fontisto';
@@ -17,21 +17,21 @@ import {
   FilterButton,
   styles,
   Main,
-} from '../layout/pages/Home';
-import {BACKGROUND_COLOR, TEXT_COLOR} from '../layout/constants';
+} from './style';
+import {BACKGROUND_COLOR, TEXT_COLOR} from '../../layout/constants';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {SortFilterModal} from '../components/SortFilterModal';
-import {filterSelector} from '../../domain/ducks/filterReducer';
-import {Pokemon} from '../../domain/entities/pokemon';
-import {GenerationFilterModal} from '../components/GenerationFilterModal';
-import {Loading} from '../components/Loading';
-import {FilterModal} from '../components/FilterModal';
+import {SortFilterModal} from '../../components/SortModal';
+import {filterSelector} from '../../../domain/ducks/filterReducer';
+import {Pokemon} from '../../../domain/entities/pokemon';
+import {GenerationFilterModal} from '../../components/GenerationFilterModal';
+import {Loading} from '../../components/Loading';
+import {FilterModal} from '../../components/FilterModal';
 
 export const Home: React.FC = () => {
   const dispatch = useDispatch();
   const {pokemons, isLoading} = useSelector(pokemonSelector);
-  const {sort, generation} = useSelector(filterSelector);
+  const {sort, generation, types} = useSelector(filterSelector);
 
   const [search, setSearch] = useState<string>('');
 
@@ -86,6 +86,12 @@ export const Home: React.FC = () => {
     [search],
   );
 
+  const handleFilterByType = useCallback(
+    (pokemon: Pokemon) =>
+      pokemon.types.map(type => types.includes(type.type.name)).includes(true),
+    [types],
+  );
+
   return (
     <SafeAreaView style={{backgroundColor: BACKGROUND_COLOR.white}}>
       <Header>
@@ -131,7 +137,11 @@ export const Home: React.FC = () => {
           data={
             isLoading
               ? []
-              : pokemons.slice().sort(handleSort).filter(handleFilterByName)
+              : pokemons
+                  .slice()
+                  .sort(handleSort)
+                  .filter(handleFilterByName)
+                  .filter(handleFilterByType)
           }
           renderItem={({item}: {item: Pokemon}) => <PokemonCard {...item} />}
           keyExtractor={(pokemon: Pokemon) => pokemon.name}

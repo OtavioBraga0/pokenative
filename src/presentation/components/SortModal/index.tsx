@@ -1,18 +1,12 @@
 import React, {useCallback} from 'react';
-import {ModalBase, ModalBaseProps} from './ModalBase';
-import {
-  Title,
-  Description,
-  ButtonAction,
-  ButtonActionText,
-  Content,
-} from '../layout/components/SortFilterModal';
+import {ModalBase, ModalBaseProps} from '../ModalBase';
+import {Title, Description, Content} from './style';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   filterSelector,
   handleFilterThunk,
-} from '../../domain/ducks/filterReducer';
-import {TouchableOpacityProps} from 'react-native';
+} from '../../../domain/ducks/filterReducer';
+import {ActionButton} from '../ActionButton';
 
 export const SortFilterModal: React.FC<ModalBaseProps> = ({...modalProps}) => {
   const {sort} = useSelector(filterSelector);
@@ -33,39 +27,27 @@ export const SortFilterModal: React.FC<ModalBaseProps> = ({...modalProps}) => {
         <Description>
           Sort Pokémons alphabetically or by National Pokédex number!
         </Description>
-        <Button
+        <ActionButton
           activated={sort === 'asc'}
           onPress={() => handleSelectSort('asc')}>
           Smallest number first
-        </Button>
-        <Button
+        </ActionButton>
+        <ActionButton
           activated={sort === 'desc'}
           onPress={() => handleSelectSort('desc')}>
           Highest number first
-        </Button>
-        <Button
+        </ActionButton>
+        <ActionButton
           activated={sort === 'a-z'}
           onPress={() => handleSelectSort('a-z')}>
           A - Z
-        </Button>
-        <Button
+        </ActionButton>
+        <ActionButton
           activated={sort === 'z-a'}
           onPress={() => handleSelectSort('z-a')}>
           Z - A
-        </Button>
+        </ActionButton>
       </Content>
     </ModalBase>
-  );
-};
-
-interface ButtonProps extends TouchableOpacityProps {
-  activated: boolean;
-}
-
-const Button: React.FC<ButtonProps> = ({children, activated, ...rest}) => {
-  return (
-    <ButtonAction activated={activated} {...rest}>
-      <ButtonActionText activated={activated}>{children}</ButtonActionText>
-    </ButtonAction>
   );
 };

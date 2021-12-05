@@ -1,10 +1,6 @@
 // @ts-ignore
 import styled from 'styled-components/native';
-import {BACKGROUND_COLOR} from '../constants';
-
-type ModalBodyProps = {
-  expanded: boolean;
-};
+import {BACKGROUND_COLOR} from '../../layout/constants';
 
 export const ModalBody = styled.View`
   position: absolute;
@@ -12,7 +8,7 @@ export const ModalBody = styled.View`
   left: -20px;
   right: -20px;
 
-  height: ${(props: ModalBodyProps) => (props.expanded ? 'auto' : '300px')};
+  height: auto;
 
   background-color: ${BACKGROUND_COLOR.white};
 

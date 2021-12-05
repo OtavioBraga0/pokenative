@@ -1,6 +1,6 @@
 // @ts-ignore
 import styled from 'styled-components/native';
-import {TEXT_COLOR} from '../constants';
+import {TEXT_COLOR} from '../../layout/constants';
 
 type PokemonCard = {
   background: string;

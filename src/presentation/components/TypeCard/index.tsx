@@ -1,9 +1,9 @@
 import React from 'react';
-import {Type} from '../../domain/entities/pokemon';
+import {Type} from '../../../domain/entities/pokemon';
 
-import {Card, Name} from '../layout/components/TypeCard';
-import {BACKGROUND_COLOR, TYPE_COLORS} from '../layout/constants';
-import {TypeIcon} from './Icons';
+import {Card, Name} from './style';
+import {BACKGROUND_COLOR, TYPE_COLORS} from '../../layout/constants';
+import {TypeIcon} from '../Icons';
 
 export const TypeCard: React.FC<Type> = ({type}) => {
   return (

@@ -39,7 +39,7 @@ export const getPokemonsThunk = createAsyncThunk<Pokemon[], void, ThunkApi>(
       ).then(results => results.map(result => result.data));
 
       return pokemons;
-    } catch (error) {
+    } catch (error: {message: string}) {
       return thunkAPI.rejectWithValue(error.message);
     }
   },

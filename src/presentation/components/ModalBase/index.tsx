@@ -1,5 +1,5 @@
 import React, {Dispatch, SetStateAction, useCallback, useState} from 'react';
-import {Marker, ModalBody} from '../layout/components/ModalBase';
+import {Marker, ModalBody} from './style';
 
 import Modal from 'react-native-modal';
 import {ViewProps} from 'react-native';

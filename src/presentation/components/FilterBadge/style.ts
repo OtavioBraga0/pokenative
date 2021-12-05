@@ -1,6 +1,6 @@
 // @ts-ignore
 import styled from 'styled-components/native';
-import {BadgeProps} from '../../components/FilterBadge';
+import {BadgeProps} from '.';
 
 interface BadgeStyleProps extends BadgeProps {
   type: string;

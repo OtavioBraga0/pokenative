@@ -1,26 +1,19 @@
 import React from 'react';
-import {Pokemon, Type} from '../../domain/entities/pokemon';
+import {Pokemon, Type} from '../../../domain/entities/pokemon';
 
 import {pure} from 'recompose';
 
-import {
-  Bg,
-  Card,
-  Content,
-  Id,
-  Name,
-  Sprite,
-} from '../layout/components/PokemonCard';
-import {BG_COLORS} from '../layout/constants';
+import {Bg, Card, Content, Id, Name, Sprite} from './style';
+import {BG_COLORS} from '../../layout/constants';
 
 // @ts-ignore
-import bgDetails from '../assets/pokemonCard_bg.png';
-import {TypeCard} from './TypeCard';
+import bgDetails from '../../assets/pokemonCard_bg.png';
+import {TypeCard} from '../TypeCard';
 import {FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
-import {ROUTES} from '../Routes';
+import {ROUTES} from '../../Routes';
 import {useDispatch} from 'react-redux';
-import {selectPokemon} from '../../domain/ducks/pokemonReducer';
+import {selectPokemon} from '../../../domain/ducks/pokemonReducer';
 
 const PurePokemonCard: React.FC<Pokemon> = props => {
   const navigation = useNavigation();

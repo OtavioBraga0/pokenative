@@ -11,29 +11,29 @@ export type FilterActionsType = PayloadAction<null> | PayloadAction<boolean>;
 
 export interface FilterState {
   types: string[];
-  weaknesses: string[];
   sort: 'asc' | 'desc' | 'a-z' | 'z-a';
   generation: string;
   height: number[];
   weight: number[];
-  numberRange: number[];
 }
 
 export const FILTER_INITIAL_STATE: FilterState = {
   types: [],
-  weaknesses: [],
   sort: 'asc',
   generation: 'i',
   height: [],
   weight: [],
-  numberRange: [],
 };
 
 export const filterSelector = (state: EngageState): FilterState => state.filter;
 
 export const handleFilterThunk: PayloadActionCreator<{
-  [key: string]: string | string[] | number[];
+  [key: string]: string | (number | string)[];
 }> = createAction('duck/filter/handleFilter');
+
+export const handleResetThunk: PayloadActionCreator<void> = createAction(
+  'duck/filter/handleResetThunk',
+);
 
 function handleFilter(
   state: FilterState,
@@ -45,7 +45,17 @@ function handleFilter(
   };
 }
 
+function handleReset(state: FilterState): FilterState {
+  return {
+    ...state,
+    types: [],
+    height: [],
+    weight: [],
+  };
+}
+
 export const filterReducer: Reducer<FilterState, FilterActionsType> =
   createReducer(FILTER_INITIAL_STATE, {
     [handleFilterThunk.type]: handleFilter,
+    [handleResetThunk.type]: handleReset,
   });
