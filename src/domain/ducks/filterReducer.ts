@@ -13,8 +13,8 @@ export interface FilterState {
   types: string[];
   sort: 'asc' | 'desc' | 'a-z' | 'z-a';
   generation: string;
-  height: number[];
-  weight: number[];
+  height: string[];
+  weight: string[];
 }
 
 export const FILTER_INITIAL_STATE: FilterState = {

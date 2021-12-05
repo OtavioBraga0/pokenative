@@ -31,7 +31,7 @@ import {FilterModal} from '../../components/FilterModal';
 export const Home: React.FC = () => {
   const dispatch = useDispatch();
   const {pokemons, isLoading} = useSelector(pokemonSelector);
-  const {sort, generation, types} = useSelector(filterSelector);
+  const {sort, generation, types, height, weight} = useSelector(filterSelector);
 
   const [search, setSearch] = useState<string>('');
 
@@ -87,9 +87,52 @@ export const Home: React.FC = () => {
   );
 
   const handleFilterByType = useCallback(
-    (pokemon: Pokemon) =>
-      pokemon.types.map(type => types.includes(type.type.name)).includes(true),
+    (pokemon: Pokemon) => {
+      const haveType = pokemon.types.map(type =>
+        types.includes(type.type.name),
+      );
+
+      return haveType.includes(true);
+    },
     [types],
+  );
+
+  const handleFilterByHeight = useCallback(
+    (pokemon: Pokemon) => {
+      let listOfHeight = [];
+
+      if (height.includes('short')) {
+        listOfHeight.push(pokemon.height < 22);
+      }
+      if (height.includes('medium')) {
+        listOfHeight.push(pokemon.height >= 22 && pokemon.height < 44);
+      }
+      if (height.includes('tall')) {
+        listOfHeight.push(pokemon.height >= 44 && pokemon.height < 66);
+      }
+
+      return listOfHeight.includes(true);
+    },
+    [height],
+  );
+
+  const handleFilterByWeight = useCallback(
+    (pokemon: Pokemon) => {
+      let listOfHeight = [];
+
+      if (height.includes('light')) {
+        listOfHeight.push(pokemon.height < 3166);
+      }
+      if (height.includes('normal')) {
+        listOfHeight.push(pokemon.height >= 3166 && pokemon.height < 6332);
+      }
+      if (height.includes('heavy')) {
+        listOfHeight.push(pokemon.height >= 6332 && pokemon.height < 9600);
+      }
+
+      return listOfHeight.includes(true);
+    },
+    [height],
   );
 
   return (
@@ -141,7 +184,15 @@ export const Home: React.FC = () => {
                   .slice()
                   .sort(handleSort)
                   .filter(handleFilterByName)
-                  .filter(handleFilterByType)
+                  .filter((pokemon: Pokemon) =>
+                    types.length > 0 ? handleFilterByType(pokemon) : true,
+                  )
+                  .filter((pokemon: Pokemon) =>
+                    height.length > 0 ? handleFilterByHeight(pokemon) : true,
+                  )
+                  .filter((pokemon: Pokemon) =>
+                    weight.length > 0 ? handleFilterByWeight(pokemon) : true,
+                  )
           }
           renderItem={({item}: {item: Pokemon}) => <PokemonCard {...item} />}
           keyExtractor={(pokemon: Pokemon) => pokemon.name}

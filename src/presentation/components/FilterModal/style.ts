@@ -2,6 +2,7 @@
 import styled from 'styled-components/native';
 import {StyleSheet} from 'react-native';
 import {TEXT_COLOR} from '../../layout/constants';
+import {ActionButton} from '../ActionButton';
 
 type ButtonProps = {
   activated: boolean;
@@ -45,6 +46,10 @@ export const Filter = styled.View`
 export const ActionGroup = styled.View`
   flex-direction: row;
   justify-content: space-between;
+`;
+
+export const Button = styled(ActionButton)`
+  width: 45%;
 `;
 
 export const styles = StyleSheet.create({
