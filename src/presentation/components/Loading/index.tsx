@@ -35,7 +35,7 @@ export const Loading: React.FC<LoadingProps> = ({isLoading}) => {
 
   return (
     <Animated.Image
-      source={require('../../assets/loading.png')}
+      source={require('../../assets/pokeball.png')}
       style={[
         styles.loading,
         {transform: [{rotateZ: rotateAnimInterpolation}]},
