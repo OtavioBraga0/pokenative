@@ -11,9 +11,9 @@ export const Gap = styled.View`
   ${(props: GapType) =>
     props.gapDirection === 'row'
       ? `
-  margin-right: ${props.size};`
+  margin-right: ${props.size}px;`
       : `
-  margin-top: ${props.size};`}
+  margin-top: ${props.size}px;`}
 `;
 
 export const style = StyleSheet.create({

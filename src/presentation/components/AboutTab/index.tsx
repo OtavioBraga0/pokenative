@@ -29,8 +29,10 @@ export const AboutTab: React.FC = () => {
       (detailedPokemon?.pokemon_specie?.flavor_text_entries[0]
         .flavor_text as string) || '';
 
-    // @ts-ignore
-    return flavorText.replaceAll('\n', ' ');
+    if (flavorText.replaceAll) {
+      // @ts-ignore
+      return flavorText.replaceAll('\n', ' ');
+    }
   }, [detailedPokemon?.pokemon_specie]);
 
   const convertToMeters = useCallback(
@@ -112,7 +114,7 @@ export const AboutTab: React.FC = () => {
                 <SubTitle>Weaknesses</SubTitle>
                 <ScrollView horizontal={true}>
                   {detailedPokemon?.weaknesses.map(weakness => (
-                    <Gap gapDirection="row" size={1}>
+                    <Gap gapDirection="row" size={5}>
                       <TypeBadge name={weakness} />
                     </Gap>
                   ))}
