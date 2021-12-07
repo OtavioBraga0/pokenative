@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {pokemonSelector} from '../../../domain/ducks/pokemonReducer';
@@ -30,6 +30,7 @@ import {
   getPokemonTypeDetailThunk,
 } from '../../../domain/thunks/pokemonThunk';
 import {ThemeProvider} from 'styled-components';
+import {StatsTab} from '../../components/StatsTab';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -92,7 +93,7 @@ export const Pokemon: React.FC = () => {
             )}
             sceneContainerStyle={style.tabScreen}>
             <Tab.Screen name="About" component={AboutTab} />
-            <Tab.Screen name="Stats" component={AboutTab} />
+            <Tab.Screen name="Stats" component={StatsTab} />
             <Tab.Screen name="Evolution" component={AboutTab} />
           </Tab.Navigator>
         </Container>
