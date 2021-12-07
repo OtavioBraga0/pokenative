@@ -70,3 +70,8 @@ export const BACKGROUND_COLOR: DefaultType = {
   modal: 'rgba(0,0,0,0.5)',
   button: '#EA5D60',
 };
+
+export const GENDER_COLOR: DefaultType = {
+  female: '#ED6EC7',
+  male: '#748FC9',
+};

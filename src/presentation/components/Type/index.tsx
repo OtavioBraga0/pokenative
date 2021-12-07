@@ -1,7 +1,7 @@
 import React from 'react';
 import {Type} from '../../../domain/entities/pokemon';
 
-import {Card, Name} from './style';
+import {Badge, Card, Name} from './style';
 import {BACKGROUND_COLOR, TYPE_COLORS} from '../../layout/constants';
 import {TypeIcon} from '../Icons';
 
@@ -11,5 +11,13 @@ export const TypeCard: React.FC<Type> = ({type}) => {
       <TypeIcon name={type.name} color={BACKGROUND_COLOR.white} size={15} />
       <Name>{type.name}</Name>
     </Card>
+  );
+};
+
+export const TypeBadge: React.FC<{name: string}> = ({name}) => {
+  return (
+    <Badge background={TYPE_COLORS[name]}>
+      <TypeIcon name={name} color={BACKGROUND_COLOR.white} size={15} />
+    </Badge>
   );
 };

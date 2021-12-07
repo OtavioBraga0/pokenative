@@ -6,8 +6,12 @@ import {
 } from '@reduxjs/toolkit';
 import {PayloadActionCreator} from '@reduxjs/toolkit/src/createAction';
 import {EngageState} from '../DomainLayer';
-import {Pokemon} from '../entities/pokemon';
-import {getPokemonsThunk} from '../thunks/pokemonThunk';
+import {Pokemon, PokemonSpecieType} from '../entities/pokemon';
+import {
+  getPokemonSpecieDetailThunk,
+  getPokemonsThunk,
+  getPokemonTypeDetailThunk,
+} from '../thunks/pokemonThunk';
 
 export type PokemonActionsType =
   | PayloadAction<Pokemon>
@@ -37,6 +41,9 @@ export const selectPokemon: PayloadActionCreator<Pokemon> = createAction(
   'duck/pokemon/selectPokemon',
 );
 
+export const getPokemonSpecieDetails: PayloadActionCreator<PokemonSpecieType> =
+  createAction('duck/pokemon/getPokemonSpecieDetails');
+
 function handleGetDetailedPokemons(
   state: PokemonState,
   action: PayloadAction<Pokemon[]>,
@@ -55,6 +62,34 @@ function handleSelectPokemon(
   return {
     ...state,
     detailedPokemon: action.payload,
+    isLoading: false,
+  };
+}
+
+function handleGetPokemonSpecieDetails(
+  state: PokemonState,
+  action: PayloadAction<PokemonSpecieType>,
+): PokemonState {
+  return {
+    ...state,
+    detailedPokemon: {
+      ...(state.detailedPokemon as Pokemon),
+      pokemon_specie: action.payload,
+    },
+    isLoading: false,
+  };
+}
+
+function handleGetPokemonTypeDetail(
+  state: PokemonState,
+  action: PayloadAction<string[]>,
+): PokemonState {
+  return {
+    ...state,
+    detailedPokemon: {
+      ...(state.detailedPokemon as Pokemon),
+      weaknesses: action.payload,
+    },
     isLoading: false,
   };
 }
@@ -78,5 +113,11 @@ export const pokemonReducer: Reducer<PokemonState, PokemonActionsType> =
     [getPokemonsThunk.pending.type]: handlePending,
     [getPokemonsThunk.rejected.type]: handleRejected,
     [getPokemonsThunk.fulfilled.type]: handleGetDetailedPokemons,
+    [getPokemonSpecieDetailThunk.pending.type]: handlePending,
+    [getPokemonSpecieDetailThunk.rejected.type]: handleRejected,
+    [getPokemonSpecieDetailThunk.fulfilled.type]: handleGetPokemonSpecieDetails,
+    [getPokemonTypeDetailThunk.pending.type]: handlePending,
+    [getPokemonTypeDetailThunk.rejected.type]: handleRejected,
+    [getPokemonTypeDetailThunk.fulfilled.type]: handleGetPokemonTypeDetail,
     [selectPokemon.type]: handleSelectPokemon,
   });

@@ -8,7 +8,7 @@ import {BG_COLORS} from '../../layout/constants';
 
 // @ts-ignore
 import bgDetails from '../../assets/pokemonCard_bg.png';
-import {TypeCard} from '../TypeCard';
+import {TypeCard} from '../Type';
 import {FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 import {ROUTES} from '../../Routes';

@@ -1,8 +1,13 @@
 import {Dispatch} from 'redux';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {EngageState} from '../DomainLayer';
-import {Pokemon} from '../entities/pokemon';
-import {getDetailedPokemon, getPokemons} from '../../data/services/pokemon';
+import {Pokemon, PokemonSpecieType, Type} from '../entities/pokemon';
+import {
+  getDetailedPokemon,
+  getPokemons,
+  getPokemonSpecieDetail,
+  getPokemonTypeDetail,
+} from '../../data/services/pokemon';
 import {AxiosResponse} from 'axios';
 
 export interface ThunkApi {
@@ -39,8 +44,39 @@ export const getPokemonsThunk = createAsyncThunk<Pokemon[], void, ThunkApi>(
       ).then(results => results.map(result => result.data));
 
       return pokemons;
-    } catch (error: {message: string}) {
+    } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }
   },
 );
+
+export const getPokemonSpecieDetailThunk = createAsyncThunk<
+  PokemonSpecieType,
+  string,
+  ThunkApi
+>('thunk/pokemon/getPokemonSpecieDetailThunk', async (name, thunkAPI) => {
+  try {
+    const pokemonSpecie = (await getPokemonSpecieDetail(name)).data;
+    return pokemonSpecie;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
+export const getPokemonTypeDetailThunk = createAsyncThunk<
+  string[],
+  Type[],
+  ThunkApi
+>('thunk/pokemon/getPokemonTypeDetailThunk', async (types, thunkAPI) => {
+  try {
+    const weaknessList = types.map(async type => {
+      const weaknesses = (await getPokemonTypeDetail(type.type.name)).data
+        .damage_relations.double_damage_from;
+
+      return weaknesses.map(weakness => weakness.name);
+    });
+    return (await Promise.all(weaknessList)).flat();
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});

@@ -66,6 +66,10 @@ export const TypeList = styled.FlatList`
 export const style = StyleSheet.create({
   tabNavigation: {
     marginBottom: -40,
-    paddingBottom: 40,
+  },
+  tabScreen: {
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
   },
 });
